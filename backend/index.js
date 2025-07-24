@@ -12,7 +12,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-
 import clientesRouter from './routes/clientes.js';
 import contactosRouter from './routes/contactos.js';
 import productosRouter from './routes/productos.js';
@@ -20,14 +19,11 @@ import cronogramasRouter from './routes/cronogramas.js';
 import entregasRouter from './routes/entregas.js';
 import modelosMensajeRouter from './routes/modelos_mensaje.js';
 import usuariosRouter from './routes/usuarios.js';
-
 import cronogramasExtraRouter from './routes/cronogramas_extra.js';
-
 import waRouter from './routes/wa.js';
-
+import webhookRouter from './routes/webhook.js';
 import cron from 'node-cron';
 import { procesarEntregasPendientesHoy } from './controllers/wa_auto.js';
-
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 const swaggerDocument = YAML.load('./swagger.yaml');
@@ -37,7 +33,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 app.use('/api/clientes', clientesRouter);
 app.use('/api/contactos', contactosRouter);
 app.use('/api/productos', productosRouter);
@@ -46,8 +41,8 @@ app.use('/api/cronogramas', cronogramasExtraRouter);
 app.use('/api/entregas', entregasRouter);
 app.use('/api/modelos-mensaje', modelosMensajeRouter);
 app.use('/api/usuarios', usuariosRouter);
-
 app.use('/api/wa', waRouter);
+app.use('/api/webhook', webhookRouter);
 
 // Tarea programada diaria a las 08:00
 cron.schedule('0 8 * * *', async () => {
